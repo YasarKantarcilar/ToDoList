@@ -14,17 +14,18 @@ function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    //
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      //USERIN GIRIŞ YAPIP YAPMADIĞINI KONTROL EDIYORUZ, EĞER GİRİŞ YAPİLİ İSE ANA MENÜYE YÖNLENDİRİYORUZ, EĞER GİRİŞ YAPİLİ DEĞİL İSE LOGİN İŞLEMİNİ SAĞLİYORUZ
       if (user) {
         navigate("/");
-      } else {
-        console.log("LOGGED OUT");
       }
     });
     return unsubscribe();
   }, [auth]);
 
   const handleClick = () => {
+    // SIGNINWITHEMAILANDPASSWORD FONKSIYONU ILE ILK PARAMETREYE FIREBASEDEN CEKTIĞIMIZ auth DEĞERINI DİĞER PARAMETRELERE MAİL VE ŞİFRE DEĞERİNİ GİREREK ÇALİŞTİRİYORUZ
     signInWithEmailAndPassword(auth, mail, password)
       .then(() => {
         navigate("/");

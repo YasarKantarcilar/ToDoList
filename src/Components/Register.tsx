@@ -19,17 +19,18 @@ function Register() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         navigate("/");
-      } else {
-        console.log("LOGGED OUT");
       }
     });
     return unsubscribe();
   }, [auth]);
 
   const handleClick = () => {
+    // KAYIT OL BUTONUNA TIKLAYINCA CREATE USER WITH EMAIL AND PASSWORD FONKSIYONUNU ÇALIŞTIRIYORUZ
+    // İLK PARAMETREYE FİREBASEDEN ÇEKTİĞİMİZ AUTH VE DİĞER PARAMETRELERE MAIL VE SIFRE GIREREK KAYIT SAĞLIYORUZ
     if (password === password2 && mail !== "") {
       createUserWithEmailAndPassword(auth, mail, password)
         .then((res) => {
+          //KAYIT BASARILI ISE DATABASEDEKI FIRESTROREYE setDoc METODU ILE KAYDETTIRIYORUZ
           setDoc(doc(colRef, res.user.uid), {
             mail: res.user.email,
             uid: res.user.uid,

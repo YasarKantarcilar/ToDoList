@@ -10,8 +10,6 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +19,7 @@ function Main() {
   const [todoValue, settodoValue] = useState("");
 
   const handleClick = () => {
+    //EKLE BUTTONUNA TIKLADIĞIMIZDA INPUT DEĞERINI ALIP setDoc FONKSIYONU ILE DATAYI FIREBASEYE SET EDIYORUZ
     const colRef = collection(db, "todos");
 
     setDoc(doc(colRef), {
@@ -34,6 +33,7 @@ function Main() {
   };
 
   useEffect(() => {
+    // EGER USER LOGGED IN ISE getDocs FONKSIYONU ILE USER ADINA KAYITLI TUM TODO LARI CEKIYORUZ
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const colRef = collection(db, "todos");
@@ -52,8 +52,6 @@ function Main() {
     return unsubscribe();
   }, [auth]);
   const navigate = useNavigate();
-  const colRef = collection(db, "users");
-  useEffect(() => {}, []);
   return (
     <Container
       sx={{
@@ -65,6 +63,7 @@ function Main() {
       }}
     >
       <Button
+        //TIKLANDIGINDA signOut FONKSIYONU ILE CIKIS SAGLIYORUZ
         onClick={() => {
           signOut(auth).then(() => {
             navigate("/Login");
@@ -125,7 +124,7 @@ function Main() {
           flexDirection: "column",
         }}
       >
-        {todos.map((todo, idx) => (
+        {todos.map((todo: any, idx: Number) => (
           <Box
             key={idx}
             sx={{
